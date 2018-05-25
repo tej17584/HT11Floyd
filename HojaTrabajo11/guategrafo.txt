@@ -1,0 +1,5 @@
+Guatemala PuertoBarrios 300
+Guatemala Retalhuleu 200
+Guatemala Peten 500
+Guatemala Coban 150
+Coban PuertoBarrios 100
