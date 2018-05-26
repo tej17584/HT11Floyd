@@ -15,12 +15,19 @@ import java.util.Scanner;
  * Clase de Floyd
  * @version 1.0
  * Esta es la clase de Floyd
- * @author David Soto 17551 & Alejandro Tejada 17584
+ * @author David Soto 17551  Alejandro Tejada 17584
  */
 
 public class Floyd {
 
- 
+    /**
+     * Este el método para crear el algoritmo
+     * @param matriz es la matriz 
+     * @param ciudad la ciudad con vector
+     * @param origen el origen en String
+     * @param destino el destino de la ciudad
+     * @return 
+     */
     public String FloydAlgoritmo(long[][] matriz, ArrayList<String> ciudad, String origen, String destino){
         int VER = matriz.length;
         long MA[][] = matriz;
@@ -100,7 +107,14 @@ public class Floyd {
         return "\n" + ruta;
     }
     
-    
+    /**
+     * RutaReciente es la ruta reciente
+     * @param i contador
+     * @param k contador
+     * @param CA una matriz String
+     * @param CR un destino
+     * @return  un String de retorno
+     */
     public String RutaReciente(int i, int k, String[][] CA, String CR){
         if(CA[i][k].equals("")){
             return "";
@@ -109,7 +123,12 @@ public class Floyd {
             return CR;
         }
     }
-    
+    /**
+     * Es para crear la matriz
+     * @param ciudad la ciudad
+     * @param city la ruta del vector de Ruta
+     * @return una matriz
+     */
     public long[][] crearMatriz(ArrayList<String> ciudad, ArrayList<Ruta> city){
         long matriz[][] = new long[ciudad.size()][ciudad.size()];
         
@@ -133,7 +152,11 @@ public class Floyd {
         
         return matriz;
     }
-
+    /**
+     * centroGrafo es el centro del Grafo
+     * @param matriz es la matriz a buscar en 
+     * @return un String
+     */
     public int centroGrafo(long[][] matriz){
         ArrayList<Long> suma = new ArrayList<>();
         ArrayList<Long> maximo = new ArrayList<>();
@@ -187,12 +210,24 @@ public class Floyd {
         
         return resultado;
     }
+    /**
+     * Checkde la Existencia 
+     * @param origen El origen
+     * @param destino el destino de ciudad
+     * @param ciudad la ciudad que viene
+     * @return un booleano
+     */
      public boolean CheckExistencia(String origen, String destino, ArrayList<String> ciudad){
         boolean existencia;
         existencia = ciudad.contains(origen) && ciudad.contains(destino);
         return existencia;
     }
-     
+    /**
+     * Crea la lista de ruta
+     * @return un ArrayList de rutas
+     * @throws FileNotFoundException 
+     * @throws IOException 
+     */
     public ArrayList<Ruta> crearLista() throws FileNotFoundException, IOException{
         ArrayList<Ruta> ciudad = new ArrayList<>();
         File archivo = new File ("guategrafo.txt");

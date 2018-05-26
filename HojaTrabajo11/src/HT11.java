@@ -14,9 +14,9 @@ import java.util.Scanner;
  * Main Principal 
  * @version 1.0
  * Este es el main de la hoja de trabajo 11
- * @author David Soto 17551 & Alejandro Tejada 17584
+ * @author David Soto 17551  Alejandro Tejada 17584
  */
-public class HojaTrabajo11 {
+public class HT11 {
     
     public static void main(String[] args) throws IOException {
         //Se declaran los valores de vectores de ArrayList para el uso

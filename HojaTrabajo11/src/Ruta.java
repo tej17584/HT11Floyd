@@ -9,13 +9,18 @@ import java.util.ArrayList;
  * Clase de Ruta
  * @version 1.0
  * Esta es la clase de Ruta
- * @author David Soto 17551 & Alejandro Tejada 17584
+ * @author David Soto 17551  Alejandro Tejada 17584
  */
 public class Ruta {
        private String ciudad1;
     private String ciudad2;
     private int distancia;
-
+    /**
+     * Es la instancia de la clase
+     * @param ciudad1 una ciudad
+     * @param ciudad2 una ciudad 
+     * @param distancia la distancia
+     */
     public Ruta(String ciudad1, String ciudad2, int distancia) {
         this.ciudad1 = ciudad1;
         this.ciudad2 = ciudad2;
@@ -53,7 +58,11 @@ public class Ruta {
     public String toString() {
         return "Origen:" + ciudad1 + ", destino: " + ciudad2 + ", distancia: " + distancia;
     }
-    
+    /**
+     * Se crea la lista
+     * @param ruta es la ruta 
+     * @return un ArrayList
+     */
     public ArrayList crearLista(ArrayList<Ruta> ruta){
         ArrayList<String> ciudades = new ArrayList<>();
         
