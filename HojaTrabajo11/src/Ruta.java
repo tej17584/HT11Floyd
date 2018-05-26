@@ -6,7 +6,9 @@
 
 import java.util.ArrayList;
 /**
- *
+ * Clase de Ruta
+ * @version 1.0
+ * Esta es la clase de Ruta
  * @author David Soto 17551 & Alejandro Tejada 17584
  */
 public class Ruta {

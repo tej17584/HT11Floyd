@@ -12,107 +12,105 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *
+ * Clase de Floyd
+ * @version 1.0
+ * Esta es la clase de Floyd
  * @author David Soto 17551 & Alejandro Tejada 17584
  */
 
 public class Floyd {
 
-    public Floyd() {
+ 
+    public String FloydAlgoritmo(long[][] matriz, ArrayList<String> ciudad, String origen, String destino){
+        int VER = matriz.length;
+        long MA[][] = matriz;
         
-    }
-    
-    public String algoritmoFloyd(long[][] matriz, ArrayList<String> ciudad, String origen, String destino){
-        int vertices = matriz.length;
-        long mAdyacencia[][] = matriz;
+        int R1 = ciudad.indexOf(origen);
+        int R2 = ciudad.indexOf(destino);
         
-        int restriccion1 = ciudad.indexOf(origen);
-        int restriccion2 = ciudad.indexOf(destino);
-        
-        String caminos[][] = new String[vertices][vertices];
-        String caminosAuxiliares[][] = new String[vertices][vertices];
-        String caminoRecorrido = "";
-        String cadena = "", caminitos = "";
+        String CAM[][] = new String[VER][VER];
+        String CA[][] = new String[VER][VER];
+        String CR = "";
+        String cadena = "", ruta = "";
         
         int i, j, k;
-        float temporal1, temporal2, temporal3, temporal4, minimo;
+        float t1, t2, t3, t4, minimo;
         
-        for(i = 0; i < vertices; i++){
-            for(j = 0; j < vertices; j++){
-                caminos[i][j] = "";
-                caminosAuxiliares[i][j] = "";
+        for(i = 0; i < VER; i++){
+            for(j = 0; j < VER; j++){
+                CAM[i][j] = "";
+                CA[i][j] = "";
             }
         }
         
-        for (k = 0; k < vertices; k++) {
-            for (i = 0; i < vertices; i++) {
-                for (j = 0; j < vertices; j++) {
-                    temporal1 = mAdyacencia[i][j];
-                    temporal2 = mAdyacencia[i][k];
-                    temporal3 = mAdyacencia[k][j];
-                    temporal4 = temporal2 + temporal3;
+        for (k = 0; k < VER; k++) {
+            for (i = 0; i < VER; i++) {
+                for (j = 0; j < VER; j++) {
+                    t1 = MA[i][j];
+                    t2 = MA[i][k];
+                    t3 = MA[k][j];
+                    t4 = t2 + t3;
                     
-                    minimo = Math.min(temporal1, temporal4);
-                    if(temporal1 != temporal4){
-                        if(minimo == temporal4){
-                            caminoRecorrido = "";
-                            caminosAuxiliares[i][j] = k + "";
-                            caminos[i][j] = caminosR(i, k, caminosAuxiliares, caminoRecorrido) + (k + 1);                            
+                    minimo = Math.min(t1, t4);
+                    if(t1 != t4){
+                        if(minimo == t4){
+                            CR = "";
+                            CA[i][j] = k + "";
+                            CAM[i][j] = RutaReciente(i, k, CA, CR) + (k + 1);                            
                         }
                     }
-                    mAdyacencia[i][j] = (long) minimo;
+                    MA[i][j] = (long) minimo;
                 }
             }
         }
         
-        ArrayList<Integer> camino = new ArrayList<>();
+        ArrayList<Integer> rutaA = new ArrayList<>();
         
-        for (i = 0; i < vertices; i++) {
-            for (j = 0; j < vertices; j++) {
-                if(mAdyacencia[i][j] != 1000000000){
+        for (i = 0; i < VER; i++) {
+            for (j = 0; j < VER; j++) {
+                if(MA[i][j] != 1000000000){
                     if(i != j){
-                        if(caminos[i][j].equals("") && (j == restriccion2) && (i == restriccion1)){
-                            caminitos += "De " + ciudad.get(i) + " ---> " + ciudad.get(j) + " debe irse por: " + ciudad.get(i) + ", " + ciudad.get(j) + "\n";
-                        }else if(!caminos[i][j].equals("") && (j == restriccion2) && (i == restriccion1)){
-                            String demas = caminos[i][j];
-                            //System.out.println("Todo: " + demas + " y " + ciudad.get(Integer.parseInt(demas) - 1));
-                            if(!demas.contains(",")){
-                                camino.add(Integer.parseInt(demas));
+                        if(CAM[i][j].equals("") && (j == R2) && (i == R1)){
+                            ruta += "De " + ciudad.get(i) + " ---> " + ciudad.get(j) + " debe irse por: " + ciudad.get(i) + ", " + ciudad.get(j) + "\n";
+                        }else if(!CAM[i][j].equals("") && (j == R2) && (i == R1)){
+                            String texto = CAM[i][j];
+                            if(!texto.contains(",")){
+                                rutaA.add(Integer.parseInt(texto));
                             }
-                            while(demas.contains(",")){
-                                String walk = demas.substring(0, demas.indexOf(","));
-                                demas = demas.substring(demas.indexOf(",") + 2);
-                                camino.add(Integer.parseInt(walk));
-                                if(!demas.contains(",")){
-                                    camino.add(Integer.parseInt(demas));
+                            while(texto.contains(",")){
+                                String walk = texto.substring(0, texto.indexOf(","));
+                                texto = texto.substring(texto.indexOf(",") + 2);
+                                rutaA.add(Integer.parseInt(walk));
+                                if(!texto.contains(",")){
+                                    rutaA.add(Integer.parseInt(texto));
                                 }
                             }
                             
                             String c = "";
-                            for(Integer in: camino){
+                            for(Integer in: rutaA){
                                 
                                 c += ciudad.get(in - 1) + ", ";
                             }
-                            caminitos += "De " + ciudad.get(i) + " ---> " + ciudad.get(j) + " debe irse por: " + ciudad.get(i) + ", " + c + ciudad.get(j) + "\n";
+                            ruta += "De " + ciudad.get(i) + " ---> " + ciudad.get(j) + " deve viajar por: " + ciudad.get(i) + ", " + c + ciudad.get(j) + "\n";
                         }
                     }
                 }
             }
         }
-        return "\n" + caminitos;
+        return "\n" + ruta;
     }
     
     
-    public String caminosR(int i, int k, String[][] caminosAuxiliares, String caminoRecorrido){
-        if(caminosAuxiliares[i][k].equals("")){
+    public String RutaReciente(int i, int k, String[][] CA, String CR){
+        if(CA[i][k].equals("")){
             return "";
         }else{
-            caminoRecorrido += caminosR(i, Integer.parseInt(caminosAuxiliares[i][k]), caminosAuxiliares, caminoRecorrido) + (Integer.parseInt(caminosAuxiliares[i][k]) + 1) + ", ";
-            return caminoRecorrido;
+            CR += RutaReciente(i, Integer.parseInt(CA[i][k]), CA, CR) + (Integer.parseInt(CA[i][k]) + 1) + ", ";
+            return CR;
         }
     }
     
-    public long[][] crearMatriz(ArrayList<String> ciudad, ArrayList<Ruta> cities){
+    public long[][] crearMatriz(ArrayList<String> ciudad, ArrayList<Ruta> city){
         long matriz[][] = new long[ciudad.size()][ciudad.size()];
         
         for (int i = 0; i < ciudad.size(); i++) {
@@ -123,7 +121,7 @@ public class Floyd {
                     String origen = ciudad.get(i);
                     String destino = ciudad.get(j);
                     int distancia = 999999999;
-                    for(Ruta c: cities){
+                    for(Ruta c: city){
                         if(origen.equals(c.getCiudad1()) && destino.equals(c.getCiudad2())){
                             distancia = c.getDistancia();
                         }
@@ -135,43 +133,8 @@ public class Floyd {
         
         return matriz;
     }
-    
-    public boolean verificarExistencia(String origen, String destino, ArrayList<String> ciudad){
-        
-        boolean existencia;
-        
-        existencia = ciudad.contains(origen) && ciudad.contains(destino);
-        
-        return existencia;
-    }
-    
-    public String verMatriz(long[][] matriz){
-        
-        int fila = matriz.length;
-        
-        String cadena = "";
-        
-        for(int x = 0; x < fila; x++){
-            for(int y = 0; y < fila; y++){
-//                if(y == 0){
-//                    cadena += cities.get(x) + "\t\t\t";
-//                }
-                if(matriz[x][y]==999999999){
-                    cadena += -1 + "\t";
-                }else{
-                    cadena += matriz[x][y] + "\t";
-                }
-                
-            }
-            cadena += "\n";
-        }
-        if(cadena.equals("")){
-            cadena = "No hay ninguna matriz para mostrar.";
-        }
-        return cadena;
-    }
-    
-    public int centerGraph(long[][] matriz){
+
+    public int centroGrafo(long[][] matriz){
         ArrayList<Long> suma = new ArrayList<>();
         ArrayList<Long> maximo = new ArrayList<>();
         long max;
@@ -224,8 +187,13 @@ public class Floyd {
         
         return resultado;
     }
-    
-    public ArrayList<Ruta> crearListado() throws FileNotFoundException, IOException{
+     public boolean CheckExistencia(String origen, String destino, ArrayList<String> ciudad){
+        boolean existencia;
+        existencia = ciudad.contains(origen) && ciudad.contains(destino);
+        return existencia;
+    }
+     
+    public ArrayList<Ruta> crearLista() throws FileNotFoundException, IOException{
         ArrayList<Ruta> ciudad = new ArrayList<>();
         File archivo = new File ("guategrafo.txt");
         FileReader fr = new FileReader(archivo);
@@ -233,11 +201,9 @@ public class Floyd {
         String linea = "";
         Scanner scanner = new Scanner(fr);
         
-        String ciudad1;
-        String ciudad2;
+        String ciudad1, ciudad2;
         int distancia;
-        int cont = 0;
-        
+        int contador = 0;
         while (scanner.hasNextLine()) {
             linea = scanner.nextLine();
             
@@ -248,9 +214,8 @@ public class Floyd {
             linea = linea.substring(linea.indexOf(" ") + 1, linea.length());
             
             distancia = Integer.parseInt(linea.substring(0, linea.length()));
-            
-            //System.out.println(ciudad1 + "-" + ciudad2 + "-" + distancia);
-            cont++;
+
+            contador++;
             
             ciudad.add(new Ruta(ciudad1, ciudad2, distancia));
             
