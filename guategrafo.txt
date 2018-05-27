@@ -3,12 +3,9 @@ Mazatenango PuertoBarrios 100
 Guatemala Retalhuleu 200
 Guatemala Peten 500
 Guatemala Coban 150
-<<<<<<< HEAD
 Coban PuertoBarrios 100
 Guatemala Salama 30
 Salama Aurora 10
 Aurora Coban 10
 Salama Coban 30
-=======
 Siquinala Guatemala 200
->>>>>>> aaeb0634fd9e0e061fdda9e3ad23ff2aefdf1690
